@@ -11,9 +11,9 @@ import { Observable } from 'rxjs';
 
 
 export class CoursesComponent {
-  courses: Observable<Course[]>;
+  courses$: Observable<Course[]>;
   displayedColumns = ['_id', 'category', 'name'];
   constructor(private cs:CoursesService) {
-    this.courses = cs.list();
+    this.courses$ = cs.list();
   }
 }
