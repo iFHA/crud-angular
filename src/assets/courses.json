@@ -1,0 +1,12 @@
+[
+  {
+    "_id": "1",
+    "category": "Front-End",
+    "name": "Angular"
+  },
+  {
+    "_id": "2",
+    "category": "Back-End",
+    "name": "Spring"
+  }
+]
