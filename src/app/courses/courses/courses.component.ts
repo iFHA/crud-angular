@@ -4,6 +4,7 @@ import { catchError, Observable, of } from 'rxjs';
 import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
 import { Course } from '../model/course';
 import { CoursesService } from '../services/courses.service';
+import { CategoryPipe } from '../../shared/pipes/category.pipe';
 
 @Component({
   selector: 'app-courses',
@@ -14,7 +15,7 @@ import { CoursesService } from '../services/courses.service';
 
 export class CoursesComponent {
   courses$: Observable<Course[]>;
-  displayedColumns = ['_id', 'category', 'name'];
+  displayedColumns = ['_id', 'name', 'category'];
   constructor(private cs:CoursesService, public dialog: MatDialog) {
     this.courses$ = cs.list().pipe(
       catchError(error => {
