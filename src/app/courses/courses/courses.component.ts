@@ -15,7 +15,7 @@ import { CategoryPipe } from '../../shared/pipes/category.pipe';
 
 export class CoursesComponent {
   courses$: Observable<Course[]>;
-  displayedColumns = ['_id', 'name', 'category'];
+  displayedColumns = ['_id', 'name', 'category', 'actions'];
   constructor(private cs:CoursesService, public dialog: MatDialog) {
     this.courses$ = cs.list().pipe(
       catchError(error => {
