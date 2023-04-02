@@ -5,6 +5,7 @@ import { ErrorDialogComponent } from '../../shared/components/error-dialog/error
 import { Course } from '../model/course';
 import { CoursesService } from '../services/courses.service';
 import { CategoryPipe } from '../../shared/pipes/category.pipe';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-courses',
@@ -16,7 +17,12 @@ import { CategoryPipe } from '../../shared/pipes/category.pipe';
 export class CoursesComponent {
   courses$: Observable<Course[]>;
   displayedColumns = ['_id', 'name', 'category', 'actions'];
-  constructor(private cs:CoursesService, public dialog: MatDialog) {
+  constructor(
+    private cs:CoursesService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    public dialog: MatDialog
+    ) {
     this.courses$ = cs.list().pipe(
       catchError(error => {
         this.onError("Erro ao carregar cursos");
@@ -28,5 +34,8 @@ export class CoursesComponent {
     this.dialog.open(ErrorDialogComponent, {
       data: msg
     });
+  }
+  onAdd() {
+    this.router.navigate(['courses/new'], { relativeTo:this.activatedRoute });
   }
 }
