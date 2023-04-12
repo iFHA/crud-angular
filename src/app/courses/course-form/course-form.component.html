@@ -8,7 +8,12 @@
         <input matInput placeholder="Nome do Curso" formControlName="name">
       </mat-form-field>
       <mat-form-field class="full-width">
-        <input matInput placeholder="Categoria do Curso" formControlName="category">
+        <mat-label for="categoria">Categoria</mat-label>
+        <mat-select formControlName="category" matNativeControl required name="categoria">
+          <mat-option value="">Selecione uma opção</mat-option>
+          <mat-option value="Front-End">Front-End</mat-option>
+          <mat-option value="Back-End">Back-End</mat-option>
+        </mat-select>
       </mat-form-field>
     </form>
   </mat-card-content>
