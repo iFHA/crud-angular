@@ -36,6 +36,6 @@ export class CoursesComponent {
     });
   }
   onAdd() {
-    this.router.navigate(['courses/new'], { relativeTo:this.activatedRoute });
+    this.router.navigate(['new'], { relativeTo:this.activatedRoute });
   }
 }
