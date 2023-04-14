@@ -15,7 +15,7 @@ export class CoursesService {
               //já que o mesmo não retorna um stream
     );
   }
-  save (course: Course):Observable<Course> {
+  save (course: Partial<Course>):Observable<Course> {
     return this.httpClient.post<Course>(this.API, course);
   }
 }
