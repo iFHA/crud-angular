@@ -13,6 +13,7 @@ export class CoursesService {
     return this.httpClient.get<Course[]>(this.API).pipe(
       first()// estou interessado apenas na primeira resposta que o servidor nos dá,
               //já que o mesmo não retorna um stream
+      // ,delay(5000)
     );
   }
   save (course: Partial<Course>):Observable<Course> {
