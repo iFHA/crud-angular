@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { Course } from '../model/course';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Course } from '../../model/course';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -10,12 +10,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class CoursesListComponent {
   readonly displayedColumns = ['_id', 'name', 'category', 'actions'];
   @Input() courses: Course[] = [];
+  @Output() add = new EventEmitter(false);
   constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute
   ) {}
-
   onAdd() {
-    this.router.navigate(['new'], { relativeTo: this.activatedRoute });
+    this.add.emit();
   }
 }
