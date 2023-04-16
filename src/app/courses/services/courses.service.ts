@@ -16,8 +16,14 @@ export class CoursesService {
       // ,delay(5000)
     );
   }
-  save (course: Partial<Course>):Observable<Course> {
+  private create (course: Partial<Course>):Observable<Course> {
     return this.httpClient.post<Course>(this.API, course);
+  }
+  private update (course: Partial<Course>):Observable<Course> {
+    return this.httpClient.put<Course>(`${this.API}/${course._id}`, course);
+  }
+  save (course: Partial<Course>):Observable<Course> {
+    return course._id ? this.update(course) : this.create(course);
   }
   findById(id:string):Observable<Course> {
     return this.httpClient.get<Course>(this.API + "/" + id);
