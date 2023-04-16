@@ -19,4 +19,7 @@ export class CoursesService {
   save (course: Partial<Course>):Observable<Course> {
     return this.httpClient.post<Course>(this.API, course);
   }
+  findById(id:string):Observable<Course> {
+    return this.httpClient.get<Course>(this.API + "/" + id);
+  }
 }
