@@ -28,4 +28,7 @@ export class CoursesService {
   findById(id:string):Observable<Course> {
     return this.httpClient.get<Course>(this.API + "/" + id);
   }
+  delete (id:string):Observable<void> {
+    return this.httpClient.delete<void>(`${this.API}/${id}`);
+  }
 }

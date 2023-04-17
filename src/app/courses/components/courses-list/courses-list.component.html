@@ -26,7 +26,7 @@
       <button (click)="onEdit(course)" mat-icon-button color="primary" aria-label="Editar">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button color="warn" aria-label="Remover">
+      <button (click)="onDelete(course._id)" mat-icon-button color="warn" aria-label="Remover">
         <mat-icon>delete</mat-icon>
       </button>
     </mat-cell>
