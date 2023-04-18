@@ -42,7 +42,8 @@ export class CoursesComponent {
     // abrir dialog, se confirmar, acessa rota de delete
     this.cs.delete(id).subscribe({
       next: () => {
-        this.snackBar.open(`Curso ${id} removido com sucesso`, 'X', { duration: 5000, verticalPosition: 'top', horizontalPosition: 'center' });
+        this.snackBar.open(`Curso ${id} removido com sucesso`, 'X',
+            { duration: 5000, verticalPosition: 'top', horizontalPosition: 'center' });
         this.refresh();
       },
       error: () => {
