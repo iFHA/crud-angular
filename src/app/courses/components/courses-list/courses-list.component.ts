@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Course } from '../../model/course';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationDialogComponent } from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-courses-list',
@@ -14,6 +16,7 @@ export class CoursesListComponent {
   @Output() edit = new EventEmitter(false);
   @Output() delete = new EventEmitter(false);
   constructor(
+    private dialog: MatDialog
   ) {}
   onAdd() {
     this.add.emit();
@@ -22,6 +25,14 @@ export class CoursesListComponent {
     this.edit.emit(course);
   }
   onDelete(id:string) {
-    this.delete.emit(id);
+    this.dialog.open(ConfirmationDialogComponent, {
+      data: "Deseja Realmente Apagar o Curso?"
+    })
+    .afterClosed()
+    .subscribe((result:boolean) => {
+      if(result) {
+        this.delete.emit(id);
+      }
+    })
   }
 }

@@ -53,4 +53,7 @@ export class CourseFormComponent {
   toast(msg:string) {
     this.snackBar.open(msg, '', { duration: 5000 });
   }
+  isUpdateMode():boolean {
+    return this.form.value._id ? true : false;
+  }
 }
