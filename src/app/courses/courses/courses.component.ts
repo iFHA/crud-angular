@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 })
 export class CoursesComponent {
   courses$:Observable<Array<Course>>;
-  // courses: Array<Course>;
 
   constructor(private readonly courseService:CoursesService) {
     this.courses$ = this.courseService.list();
