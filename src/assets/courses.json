@@ -2,16 +2,16 @@
   {
     "_id": "0",
     "name": "curso1",
-    "category": "c"
+    "category": "front-end"
   },
   {
     "_id": "1",
     "name": "curso2",
-    "category": "c"
+    "category": "back-end"
   },
   {
     "_id": "2",
     "name": "curso3",
-    "category": "c"
+    "category": "front-end"
   }
 ]
