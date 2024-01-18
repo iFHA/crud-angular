@@ -7,7 +7,7 @@ import { Observable, catchError, delay, first, of } from 'rxjs';
   providedIn: 'root'
 })
 export class CoursesService {
-  private readonly API = '/assets/courses.jsson';
+  private readonly API = '/assets/courses.json';
   constructor(private httpClient: HttpClient) { }
   list(): Observable<Array<Course>> {
     return this.httpClient.get<Array<Course>>(this.API)
