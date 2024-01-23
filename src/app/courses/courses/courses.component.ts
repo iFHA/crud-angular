@@ -26,9 +26,10 @@ export class CoursesComponent {
     );
   }
 
-  displayedColumns: Array<keyof Course> = [
+  displayedColumns: Array<string> = [
     'name',
-    'category'
+    'category',
+    'actions'
   ];
 
   onError(errorMsg:string) {
