@@ -5,6 +5,7 @@ import { Observable, catchError, of } from 'rxjs';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.component.html',
@@ -15,7 +16,9 @@ export class CoursesComponent {
 
   constructor(
     private readonly courseService:CoursesService,
-    private readonly dialog:MatDialog
+    private readonly dialog:MatDialog,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
     ) {
     this.courses$ = this.courseService.list()
     .pipe(
@@ -36,5 +39,9 @@ export class CoursesComponent {
     this.dialog.open(ErrorDialogComponent, {
       data: errorMsg,
     });
+  }
+
+  onAdd() {
+    this.router.navigate(['new'], {relativeTo: this.route});
   }
 }
