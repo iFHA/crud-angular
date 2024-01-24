@@ -13,12 +13,16 @@
 
         <mat-form-field class="full-width">
           <mat-label>Categoria</mat-label>
-          <input matInput formControlName="category">
+          <mat-select matInput formControlName="category">
+            <mat-option>Selecione uma opção</mat-option>
+            <mat-option value="front-end">Front-End</mat-option>
+            <mat-option value="back-end">Back-End</mat-option>
+          </mat-select>
         </mat-form-field>
       </form>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary">Salvar</button>
-      <button mat-raised-button color="warn">Cancelar</button>
+      <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+      <button mat-raised-button color="warn" (click)="onCancel()">Cancelar</button>
     </mat-card-actions>
 </mat-card>
