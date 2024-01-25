@@ -8,7 +8,7 @@ import { Course } from '../model/course';
 })
 export class CoursesListComponent {
   @Output()
-  add: EventEmitter<void> = new EventEmitter();
+  add: EventEmitter<void> = new EventEmitter(false);
   @Input()
   courses: Array<Course> = [];
   readonly displayedColumns: Array<string> = [
