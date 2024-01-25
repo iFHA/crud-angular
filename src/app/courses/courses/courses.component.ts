@@ -29,12 +29,6 @@ export class CoursesComponent {
     );
   }
 
-  displayedColumns: Array<string> = [
-    'name',
-    'category',
-    'actions'
-  ];
-
   onError(errorMsg:string) {
     this.dialog.open(ErrorDialogComponent, {
       data: errorMsg,

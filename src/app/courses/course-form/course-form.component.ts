@@ -20,8 +20,8 @@ export class CourseFormComponent {
     private location: Location
     ) {
     this.form = this.formBuilder.group({
-      name: [null],
-      category: [null]
+      name: [''],
+      category: ['']
     });
   }
   onSubmit(){
