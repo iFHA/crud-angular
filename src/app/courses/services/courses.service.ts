@@ -24,4 +24,7 @@ export class CoursesService {
   getById(courseId:string): Observable<Course> {
     return this.httpClient.get<Course>(`${this.API}/${courseId}`);
   }
+  delete(courseId:string): Observable<void> {
+    return this.httpClient.delete<void>(`${this.API}/${courseId}`);
+  }
 }
