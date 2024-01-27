@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, NonNullableFormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from '../../services/courses.service';
@@ -14,8 +14,8 @@ import { Course } from '../../model/course';
 export class CourseFormComponent {
   form: FormGroup = this.formBuilder.group({
     _id: [''],
-    name: [''],
-    category: ['']
+    name: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(100)]],
+    category: ['', [Validators.required]]
   });
   constructor(
     public formBuilder:NonNullableFormBuilder,
@@ -50,5 +50,27 @@ export class CourseFormComponent {
   }
   private back() {
     this.location.back();
+  }
+  getErrorMessage(fieldname: string) {
+    const field = this.form.get(fieldname);
+    if(fieldname === 'name') {
+      if (field?.hasError('required')) {
+        return 'Campo obrigatório';
+      }
+      if (field?.hasError('minlength')) {
+        const requiredLength = field.errors ? field.errors['minlength']['requiredLength'] : 5;
+        return `Tamanho mínimo para o campo é de ${requiredLength} caracteres`;
+      }
+      if (field?.hasError('maxlength')) {
+        const requiredLength = field.errors ? field.errors['maxlength']['requiredLength'] : 100;
+        return `Tamanho máximo para o campo é de ${requiredLength} caracteres`;
+      }
+    }
+    if(fieldname === 'category') {
+      if (field?.hasError('required')) {
+        return 'Campo obrigatório';
+      }
+    }
+    return 'Campo inválido';
   }
 }
