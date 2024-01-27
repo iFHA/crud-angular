@@ -1,9 +1,10 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from '../../services/courses.service';
+import { Course } from '../../model/course';
 
 @Component({
   selector: 'app-course-form',
@@ -11,18 +12,22 @@ import { CoursesService } from '../../services/courses.service';
   styleUrl: './course-form.component.scss'
 })
 export class CourseFormComponent {
-  form: FormGroup;
+  form: FormGroup = this.formBuilder.group({
+    _id: [''],
+    name: [''],
+    category: ['']
+  });
   constructor(
-    public formBuilder:FormBuilder,
+    public formBuilder:NonNullableFormBuilder,
     private coursesService:CoursesService,
     private router:Router,
     private snackBar: MatSnackBar,
-    private location: Location
+    private location: Location,
+    private activatedRoute: ActivatedRoute
     ) {
-    this.form = this.formBuilder.group({
-      name: [''],
-      category: ['']
-    });
+    this.activatedRoute.data.subscribe(({course})=> {
+      this.form.setValue({_id: course._id, name: course.name, category: course.category});
+    })
   }
   onSubmit(){
     this.coursesService.save(this.form.value).subscribe({
