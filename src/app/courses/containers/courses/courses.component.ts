@@ -38,4 +38,8 @@ export class CoursesComponent {
   onAdd() {
     this.router.navigate(['new'], {relativeTo: this.route});
   }
+
+  onEdit(id:string) {
+    this.router.navigate(['edit', id], {relativeTo: this.route});
+  }
 }

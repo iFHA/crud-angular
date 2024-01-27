@@ -18,4 +18,7 @@ export class CoursesService {
   save(course: Course): Observable<Course> {
     return this.httpClient.post<Course>(this.API, course);
   }
+  getById(courseId:string): Observable<Course> {
+    return this.httpClient.get<Course>(`${this.API}/${courseId}`);
+  }
 }
