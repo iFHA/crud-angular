@@ -15,7 +15,8 @@ export class CourseFormComponent {
   form: FormGroup = this.formBuilder.group({
     _id: [''],
     name: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(100)]],
-    category: ['', [Validators.required]]
+    category: ['', [Validators.required]],
+    lessons: [[]]
   });
   constructor(
     public formBuilder:NonNullableFormBuilder,
@@ -26,7 +27,8 @@ export class CourseFormComponent {
     private activatedRoute: ActivatedRoute
     ) {
     this.activatedRoute.data.subscribe(({course})=> {
-      this.form.setValue({_id: course._id, name: course.name, category: course.category});
+      console.log(course);
+      this.form.setValue({_id: course._id, name: course.name, category: course.category, lessons: course.lessons});
     })
   }
   onSubmit(){

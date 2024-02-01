@@ -9,5 +9,5 @@ export const courseResolver: ResolveFn<Observable<Course>> = (route, state) => {
     const courseId = route.params['id'];
     return inject(CoursesService).getById(courseId);
   }
-  return of({_id:'', name: '', category: ''});
+  return of({_id:'', name: '', category: '', lessons:[]});
 };
