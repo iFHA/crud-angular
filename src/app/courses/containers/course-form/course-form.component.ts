@@ -1,10 +1,11 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NonNullableFormBuilder, UntypedFormArray, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from '../../services/courses.service';
 import { Course } from '../../model/course';
+import { Lesson } from '../../model/lesson';
 
 @Component({
   selector: 'app-course-form',
@@ -12,12 +13,7 @@ import { Course } from '../../model/course';
   styleUrl: './course-form.component.scss'
 })
 export class CourseFormComponent {
-  form: FormGroup = this.formBuilder.group({
-    _id: [''],
-    name: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(100)]],
-    category: ['', [Validators.required]],
-    lessons: [[]]
-  });
+  form: FormGroup;
   constructor(
     public formBuilder:NonNullableFormBuilder,
     private coursesService:CoursesService,
@@ -26,10 +22,16 @@ export class CourseFormComponent {
     private location: Location,
     private activatedRoute: ActivatedRoute
     ) {
-    this.activatedRoute.data.subscribe(({course})=> {
-      console.log(course);
-      this.form.setValue({_id: course._id, name: course.name, category: course.category, lessons: course.lessons});
-    })
+    const course:Course = this.activatedRoute.snapshot.data['course'];
+    this.form = this.formBuilder.group({
+      _id: [course._id],
+      name: [course.name, [Validators.required, Validators.minLength(5),Validators.maxLength(100)]],
+      category: [course.category, [Validators.required]],
+      lessons: this.formBuilder.array(this.retrieveLessons(course))
+    });
+    // (({course})=> {
+    //   this.form.setValue({_id: course._id, name: course.name, category: course.category});
+    // })
   }
   onSubmit(){
     this.coursesService.save(this.form.value).subscribe({
@@ -74,5 +76,21 @@ export class CourseFormComponent {
       }
     }
     return 'Campo inválido';
+  }
+  private createLesson(lesson:Lesson = {_id: '', name: '', youtubeUrl: ''}) {
+    return this.formBuilder.group({
+      id: lesson._id,
+      name: lesson.name,
+      youtubeUrl: lesson.youtubeUrl
+    });
+  }
+  private retrieveLessons(course: Course){
+    if(course?.lessons) {
+      return course.lessons.map(lesson => this.createLesson(lesson));
+    }
+    return [this.createLesson()];
+  }
+  getLessonsFormArray(){
+    return (<UntypedFormArray>this.form.get('lessons')).controls;
   }
 }
