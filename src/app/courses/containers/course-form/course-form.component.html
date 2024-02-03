@@ -11,7 +11,7 @@
           <input matInput formControlName="name" #name>
           <mat-hint align="end">{{name.value.length}}/100</mat-hint>
           @if (form.get('name')?.invalid) {
-            <mat-error>{{getErrorMessage('name')}}</mat-error>
+            <mat-error>{{formUtils.getErrorMessage(form, 'name')}}</mat-error>
           }
         </mat-form-field>
 
@@ -23,7 +23,7 @@
             <mat-option value="back-end">Back-End</mat-option>
           </mat-select>
           @if (form.get('category')?.invalid) {
-            <mat-error>{{getErrorMessage('category')}}</mat-error>
+            <mat-error>{{formUtils.getErrorMessage(form, 'category')}}</mat-error>
           }
         </mat-form-field>
         <mat-toolbar>
@@ -32,7 +32,7 @@
               <mat-icon aria-label="Adicionar uma nova aula">add</mat-icon>
             </button>
         </mat-toolbar>
-        @if (isFormArrayRequired()) {
+        @if (formUtils.isFormArrayRequired(form, 'lessons')) {
           <mat-error class="form-array-error">
             Adicione pelo menos uma aula.
           </mat-error>
@@ -45,7 +45,7 @@
                 <mat-label>Nome da Aula</mat-label>
                 <input matInput formControlName="name">
                 @if (lesson.get('name')?.invalid) {
-                  <mat-error>Campo inválido</mat-error>
+                  <mat-error>{{ formUtils.getFormArrayFieldErrorMessage(form, 'lessons', 'name', i) }}</mat-error>
                 }
               </mat-form-field>
             </td>
@@ -55,7 +55,7 @@
                 <span matPrefix>https://youtu.be/</span>
                 <input matInput formControlName="youtubeUrl">
                 @if (lesson.get('youtubeUrl')?.invalid) {
-                  <mat-error>Campo inválido</mat-error>
+                  <mat-error>{{ formUtils.getFormArrayFieldErrorMessage(form, 'lessons', 'youtubeUrl', i) }}</mat-error>
                 }
               </mat-form-field>
             </td>

@@ -42,9 +42,9 @@ export class FormUtilsService {
   validateAllFormFields(formGroup: UntypedFormGroup | UntypedFormArray) {
     Object.keys(formGroup.controls).forEach(campo => {
       const control = formGroup.get(campo);
-      if(control instanceof UntypedFormControl) {
-        control.markAsTouched({onlySelf: true});
-      } else if(control instanceof UntypedFormGroup || control instanceof UntypedFormArray) {
+      control?.markAsTouched({onlySelf: true});
+
+      if(control instanceof UntypedFormGroup || control instanceof UntypedFormArray) {
         this.validateAllFormFields(control);
       }
     })

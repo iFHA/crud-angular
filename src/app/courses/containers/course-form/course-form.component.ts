@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from '../../services/courses.service';
 import { Course } from '../../model/course';
 import { Lesson } from '../../model/lesson';
+import { FormUtilsService } from '../../../shared/form/form-utils.service';
 
 @Component({
   selector: 'app-course-form',
@@ -20,7 +21,8 @@ export class CourseFormComponent {
     private router:Router,
     private snackBar: MatSnackBar,
     private location: Location,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    public formUtils: FormUtilsService
     ) {
     const course:Course = this.activatedRoute.snapshot.data['course'];
     this.form = this.formBuilder.group({
@@ -35,6 +37,7 @@ export class CourseFormComponent {
   }
   onSubmit(){
     if (!this.form.valid) {
+      this.formUtils.validateAllFormFields(this.form);
       return;
     }
     this.coursesService.save(this.form.value).subscribe({
@@ -57,28 +60,6 @@ export class CourseFormComponent {
   }
   private back() {
     this.location.back();
-  }
-  getErrorMessage(fieldname: string) {
-    const field = this.form.get(fieldname);
-    if(fieldname === 'name') {
-      if (field?.hasError('required')) {
-        return 'Campo obrigatório';
-      }
-      if (field?.hasError('minlength')) {
-        const requiredLength = field.errors ? field.errors['minlength']['requiredLength'] : 5;
-        return `Tamanho mínimo para o campo é de ${requiredLength} caracteres`;
-      }
-      if (field?.hasError('maxlength')) {
-        const requiredLength = field.errors ? field.errors['maxlength']['requiredLength'] : 100;
-        return `Tamanho máximo para o campo é de ${requiredLength} caracteres`;
-      }
-    }
-    if(fieldname === 'category') {
-      if (field?.hasError('required')) {
-        return 'Campo obrigatório';
-      }
-    }
-    return 'Campo inválido';
   }
   private createLesson(lesson:Lesson = {_id: '', name: '', youtubeUrl: ''}) {
     return this.formBuilder.group({
@@ -103,9 +84,5 @@ export class CourseFormComponent {
   removeLesson(index: number) {
     const lessons = this.form.get('lessons') as UntypedFormArray;
     lessons.removeAt(index);
-  }
-  isFormArrayRequired():boolean {
-    const lessons = this.form.get('lessons') as UntypedFormArray;
-    return !lessons.valid && lessons.hasError('required') && lessons.touched;
   }
 }
