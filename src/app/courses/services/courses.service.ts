@@ -16,7 +16,7 @@ export class CoursesService {
     );
   }
   save(course: Course): Observable<Course> {
-    if (course._id.length>0) {
+    if (course._id) {
       return this.httpClient.put<Course>(`${this.API}/${course._id}`, course);
     }
     return this.httpClient.post<Course>(this.API, course);
