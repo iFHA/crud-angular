@@ -93,4 +93,8 @@ export class CourseFormComponent {
   getLessonsFormArray(){
     return (<UntypedFormArray>this.form.get('lessons')).controls;
   }
+  addNewLesson() {
+    const lessons = this.form.get('lessons') as UntypedFormArray;
+    lessons.push(this.createLesson());
+  }
 }
