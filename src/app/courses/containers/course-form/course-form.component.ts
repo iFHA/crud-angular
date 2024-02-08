@@ -63,7 +63,7 @@ export class CourseFormComponent {
   }
   private createLesson(lesson:Lesson = {_id: '', name: '', youtubeUrl: ''}) {
     return this.formBuilder.group({
-      id: [lesson._id],
+      _id: [lesson._id],
       name: [lesson.name, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       youtubeUrl: [lesson.youtubeUrl, [Validators.required, Validators.minLength(10), Validators.maxLength(11)]]
     });
