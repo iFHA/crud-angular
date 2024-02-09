@@ -1,20 +1,25 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { Course } from '../../model/course';
 import { CoursesService } from '../../services/courses.service';
-import { Observable, catchError, of } from 'rxjs';
+import { Observable, catchError, of, tap } from 'rxjs';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CoursePage } from '../../model/course-page';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.scss']
 })
 export class CoursesComponent {
-  courses$:Observable<Array<Course>> = of([]);
+  courses$:Observable<CoursePage>|null = null;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  pageIndex = 0;
+  pageSize = 5;
 
   constructor(
     private readonly courseService:CoursesService,
@@ -25,12 +30,17 @@ export class CoursesComponent {
     ) {
     this.carregaCursos();
   }
-  carregaCursos():void {
-    this.courses$ = this.courseService.list()
+  carregaCursos(pageEvent: PageEvent = {
+    length: 0,
+    pageIndex: this.pageIndex,
+    pageSize: this.pageSize
+  }):void {
+    this.courses$ = this.courseService.list({page: pageEvent.pageIndex, pageSize: pageEvent.pageSize})
     .pipe(
+      tap(page=>{this.pageIndex=page.page; this.pageSize = page.size;}),
       catchError((error:HttpErrorResponse)=>{
         this.onError("Erro ao carregar cursos!");
-        return of([]);
+        return of({courses: [], totalElements:0, totalPages:0, page:0, size:0});
       })
     );
   }

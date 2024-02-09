@@ -2,6 +2,12 @@ import { Injectable } from '@angular/core';
 import { Course } from '../model/course';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, delay, first, of } from 'rxjs';
+import { CoursePage } from '../model/course-page';
+
+interface props {
+  page: number;
+  pageSize: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +15,11 @@ import { Observable, catchError, delay, first, of } from 'rxjs';
 export class CoursesService {
   private readonly API = 'http://localhost:8080/api/courses';
   constructor(private httpClient: HttpClient) { }
-  list(): Observable<Array<Course>> {
-    return this.httpClient.get<Array<Course>>(this.API)
+  list(page:props = {
+    page: 0,
+    pageSize: 5
+  }): Observable<CoursePage> {
+    return this.httpClient.get<CoursePage>(this.API, { params: {pageNumber: page.page, pageSize: page.pageSize}})
     .pipe(
       first()
     );
