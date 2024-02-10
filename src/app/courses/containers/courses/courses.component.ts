@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Course } from '../../model/course';
 import { CoursesService } from '../../services/courses.service';
 import { Observable, catchError, of, tap } from 'rxjs';
@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CoursePage } from '../../model/course-page';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { CoursesListComponent } from '../../components/courses-list/courses-list.component';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
@@ -20,7 +20,7 @@ import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
     templateUrl: './courses.component.html',
     styleUrls: ['./courses.component.scss'],
     standalone: true,
-    imports: [MatCard, MatCardHeader, MatToolbar, MatCardContent, MatProgressSpinner, NgIf, CoursesListComponent, MatPaginator, AsyncPipe]
+    imports: [MatCard, MatCardHeader, MatToolbar, MatCardContent, MatProgressSpinner, CoursesListComponent, MatPaginator, AsyncPipe]
 })
 export class CoursesComponent {
   courses$:Observable<CoursePage>|null = null;
