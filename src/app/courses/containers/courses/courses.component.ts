@@ -10,10 +10,17 @@ import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmat
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CoursePage } from '../../model/course-page';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { CoursesListComponent } from '../../components/courses-list/courses-list.component';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
 @Component({
-  selector: 'app-courses',
-  templateUrl: './courses.component.html',
-  styleUrls: ['./courses.component.scss']
+    selector: 'app-courses',
+    templateUrl: './courses.component.html',
+    styleUrls: ['./courses.component.scss'],
+    standalone: true,
+    imports: [MatCard, MatCardHeader, MatToolbar, MatCardContent, MatProgressSpinner, NgIf, CoursesListComponent, MatPaginator, AsyncPipe]
 })
 export class CoursesComponent {
   courses$:Observable<CoursePage>|null = null;
